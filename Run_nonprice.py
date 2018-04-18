@@ -13,20 +13,25 @@ from prettytable import PrettyTable
 from color_set import colored
 
 r = requests.get(url, verify=False)
-rows = r.json()['data']['datas']
+rows = r.json()["data"]["result"]
+stamap = r.json()["data"]["map"]
 trains= PrettyTable()
 trains.field_names=["车次","车站","时间","历时","商务座","特等座","一等座","二等座","高级软卧","软卧","硬卧 ","软座 ","硬座","无座"]
 num = len(rows)
+# 关于票价的信息隐藏的比较深，row = row.split('|')，解析出来。如下，具体对应座位关系没有具体研究。
+# '20180419', '3', 'N2', '01', '06', '0', '0', '', '', '', '', '', '', '', '', '', '',
+# '有', '有', '11', '', 'O0M090', 'OM9', '1'
 for row in rows :
-    trains.add_row([row['station_train_code'],
-                   '\n'.join([colored('green', row['from_station_name']),
-                   colored('red', row['to_station_name'])]),
-                   '\n'.join([colored('green', row['start_time']),
-                   colored('red', row['arrive_time'])]),
-                   row['lishi'],row['swz_num'],row['tz_num'],
-                   row['zy_num'],row['ze_num'],row['gr_num'],
-                   row['rw_num'],row['yw_num'],row['rz_num'],
-                   row['yz_num'],row['wz_num']])
+    row = row.split('|')
+    trains.add_row([row[3],
+                   '\n'.join([colored('green', stamap[row[6]]),
+                   colored('red', stamap[row[7]])]),
+                   '\n'.join([colored('green', row[8]),
+                   colored('red', row[9])]),
+                   row[10],1,2,
+                   3,4,5,
+                   6,7,8,
+                   9,10])
 print ('查询结束，共有 %d 趟列车。'%num )
 print (trains)
 
