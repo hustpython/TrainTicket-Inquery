@@ -19,5 +19,5 @@ print ('正在查询'+f1+'至'+t1+'的列车，请听听音乐...')
 
 
 
-url = 'https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.train_date='+d+'&leftTicketDTO.from_station='+f+'&leftTicketDTO.to_station='+t+'&purpose_codes=ADULT'
+url = 'https://kyfw.12306.cn/otn/leftTicket/query0?leftTicketDTO.train_date='+d+'&leftTicketDTO.from_station='+f+'&leftTicketDTO.to_station='+t+'&purpose_codes=ADULT'
 warnings.filterwarnings("ignore")
